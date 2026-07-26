@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skiix — Supportive Creators</title>
+<link rel="icon" type="image/jpeg" href="skiix-logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#5B8FFF;
+    --blue-mid:#8FB3FF;
+    --blue-pale:#D9E6FF;
+    --near-white:#F5F8FF;
+    --black:#050608;
+    --black-soft:#0C0E12;
+    --line:rgba(255,255,255,0.08);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--black);
+    color:var(--near-white);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:64px 24px;
+    max-width:560px;
+    margin:0 auto;
+    width:100%;
+  }
+
+  .mark{
+    width:56px;
+    height:56px;
+    border-radius:14px;
+    background:linear-gradient(135deg, var(--blue-deep), var(--near-white));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:32px;
+    box-shadow:0 0 40px rgba(91,143,255,0.35);
+  }
+
+  .mark span{
+    font-weight:800;
+    font-size:28px;
+    color:var(--black);
+    letter-spacing:-0.02em;
+  }
+
+  .eyebrow{
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--blue-mid);
+    margin-bottom:16px;
+  }
+
+  h1{
+    font-size:clamp(32px, 5.5vw, 44px);
+    font-weight:800;
+    line-height:1.08;
+    letter-spacing:-0.02em;
+    text-align:center;
+    margin-bottom:16px;
+  }
+
+  h1 .grad{
+    background:linear-gradient(90deg, var(--blue-deep), var(--blue-pale));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  p.sub{
+    font-size:16px;
+    line-height:1.5;
+    color:rgba(245,248,255,0.62);
+    text-align:center;
+    max-width:420px;
+    margin-bottom:40px;
+  }
+
+  form{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .field{
+    position:relative;
+  }
+
+  .field label{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:15px;
+    color:rgba(245,248,255,0.4);
+    pointer-events:none;
+    transition:all 0.18s ease;
+  }
+
+  .field input{
+    width:100%;
+    background:var(--black-soft);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:19px 18px 7px 18px;
+    font-size:15px;
+    font-family:inherit;
+    color:var(--near-white);
+    outline:none;
+    transition:border-color 0.18s ease, background 0.18s ease;
+  }
+
+  .field input:focus{
+    border-color:var(--blue-deep);
+    background:#0F1218;
+  }
+
+  .field input:focus + label,
+  .field input:not(:placeholder-shown) + label{
+    top:15px;
+    font-size:11px;
+    color:var(--blue-mid);
+  }
+
+  .field input::placeholder{ color:transparent; }
+
+  button{
+    margin-top:6px;
+    background:linear-gradient(90deg, var(--blue-deep), #7BA5FF);
+    border:none;
+    border-radius:12px;
+    padding:17px 18px;
+    font-family:inherit;
+    font-size:15px;
+    font-weight:700;
+    color:var(--black);
+    cursor:pointer;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  button:hover{
+    transform:translateY(-1px);
+    box-shadow:0 8px 24px rgba(91,143,255,0.3);
+  }
+
+  button:active{ transform:translateY(0); }
+
+  button:disabled{
+    opacity:0.6;
+    cursor:default;
+    transform:none;
+  }
+
+  .fine{
+    margin-top:20px;
+    font-size:12.5px;
+    color:rgba(245,248,255,0.35);
+    text-align:center;
+    line-height:1.5;
+  }
+
+  .fine strong{ color:rgba(245,248,255,0.55); font-weight:600; }
+
+  /* success state */
+  .success{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+
+  .success.show{ display:flex; }
+  form.hide{ display:none; }
+
+  .checkmark{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--blue-deep), var(--near-white));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:24px;
+  }
+
+  .checkmark svg{ width:24px; height:24px; }
+
+  .success h2{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:10px;
+  }
+
+  .success p{
+    font-size:15px;
+    color:rgba(245,248,255,0.6);
+    max-width:380px;
+    line-height:1.5;
+  }
+
+  .hp{ position:absolute; left:-9999px; }
+
+  footer{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    padding:24px;
+    font-size:12px;
+    color:rgba(245,248,255,0.28);
+  }
+
+  @media (max-width:480px){
+    .wrap{ padding:48px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+     <img src="skiix-logo.jpeg" alt="Skiix" class="mark">
+
+  <div class="eyebrow">Supportive Creators</div>
+  <h1>Get in <span class="grad">before</span> everyone else does.</h1>
+  <p class="sub">Early creators get first pick of collabs no algorithm games, just a heads up before everyone else finds out.</p>
+
+  <form id="signupForm">
+    <div class="field">
+      <input type="text" id="name" name="name" placeholder=" " required>
+      <label for="name">Your name</label>
+    </div>
+
+    <div class="field">
+      <input type="email" id="email" name="email" placeholder=" " required>
+      <label for="email">Your email</label>
+    </div>
+
+    <button type="submit" id="submitBtn">Count me in</button>
+
+    <!-- <p class="fine"><strong>No spam.</strong> We'll only reach out about collabs and launch access.</p> -->
+  </form>
+
+  <div class="success" id="successMsg">
+    <div class="checkmark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#050608" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h2>You're on the list.</h2>
+    <p>We'll be in touch before launch. Keep an eye on your inbox.</p>
+  </div>
+</div>
+
+<footer>skiix.app</footer>
+
+<script>
+  const form = document.getElementById('signupForm');
+  const successMsg = document.getElementById('successMsg');
+  const submitBtn = document.getElementById('submitBtn');
+
+  const FORM_ENDPOINT = 'https://formspree.io/f/xqergrpj';
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    const formData = new FormData(form);
+
+    fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData
+    })
+    .then((res) => {
+      if(!res.ok) throw new Error('Submit failed');
+      form.classList.add('hide');
+      successMsg.classList.add('show');
+    })
+    .catch((error) => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Count me in';
+      alert('Something went wrong. Try again.');
+      console.error(error);
+    });
+  });
+</script>
+
+</body>
+</html>
